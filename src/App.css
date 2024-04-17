@@ -32,7 +32,7 @@
 
   background: 
     linear-gradient(
-      rgb(10, 10, 15) 40%,
+      rgb(5, 5, 10) 40%,
       #000000ff 50%,
       rgba(0, 0, 0, 0.92) 50%,
       rgba(255, 0, 0, 0.8) 66.6%
@@ -63,9 +63,6 @@
 
 .productinfo {
   position: absolute;
-  /* bottom: 100px;
-  left: 200px;
-  width: 33.3%; */
 
   bottom: calc(50% - 300px);
   left: calc(50% - 500px);

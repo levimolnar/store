@@ -14,21 +14,21 @@ const ProductView = () => {
   console.log(model);
 
   useFrame((state, delta) => {
-    meshRef.current.rotation.x = .25*-state.pointer.y + .1*Math.PI;
+    meshRef.current.rotation.x = .1*-state.pointer.y + .1*Math.PI;
     // meshRef.current.rotation.y = .25*state.mouse.x + .25*Math.PI;
-    meshRef.current.rotation.y = .25*state.pointer.x + 1.15*Math.PI;
+    meshRef.current.rotation.y = .1*state.pointer.x + 1.25*Math.PI;
   });
 
   return (
     <primitive 
       object={model.scene} 
       ref={meshRef}
-      position={[-2.5,2.5,-35]}
+      position={[-2.5, 1, -35]}
       rotation={[.1*Math.PI, 1.15*Math.PI, 0]}
     >
-      <ambientLight />
-      <pointLight position={[10, 10, 10]}/>
-      {/* <meshBasicMaterial color={"#777"} /> */}
+      {/* <ambientLight intensity={50}/> */}
+      <ambientLight intensity={.4}/>
+      <pointLight position={[-5, 10, -50]} intensity={5_000} color="#80ffff" />
     </primitive>
     // <mesh 
     //   ref={meshRef} 
