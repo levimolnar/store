@@ -1,0 +1,46 @@
+:root {
+}
+
+.boldest { font-weight: 800 }
+.bold    { font-weight: 600 }
+.thin    { font-weight: 400 }
+
+.large  { 
+  font-size: 65px;
+  line-height: 1em;
+}
+
+.medium { 
+  font-size: 40px;
+  line-height: 1em;
+  letter-spacing: -.1em;
+}
+
+.small  { 
+  font-size: 20px;
+  line-height: 1em;
+}
+
+.wrap {
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(#000 20%, #08222E, #156082);
+}
+
+.label {
+  font-size: 4em;
+  color: white;
+
+  padding: .5em;
+}
+
+.productinfo {
+  width: 33.3%;
+  line-height: 1em;
+  font-size: 3em;
+  color: white;
+
+  position: absolute;
+  bottom: 100px;
+  left: 100px;
+}
