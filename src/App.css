@@ -22,25 +22,56 @@
 }
 
 .wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 100vw; height: 100vh;
   overflow: hidden;
-  background: linear-gradient(#000 20%, #08222E, #156082);
+  /* background: linear-gradient(#000 20%, #08222E, #156082); */
+
+  background: 
+    linear-gradient(
+      rgb(10, 10, 15) 40%,
+      #000000ff 50%,
+      rgba(0, 0, 0, 0.92) 50%,
+      rgba(255, 0, 0, 0.8) 66.6%
+    ),
+    linear-gradient(
+      15deg, 
+      rgba(0, 0, 255, 0.4), 
+      transparent 33.3%
+    ),
+    linear-gradient(
+      -15deg,
+      rgba(0, 255, 0, 0.4), 
+      transparent 33.3%
+    );
+  background-blend-mode: lighten; 
 }
 
 .label {
-  font-size: 4em;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+
+  font-size: 4.5em;
   color: white;
 
-  padding: .5em;
+  /* padding: .5em; */
 }
 
 .productinfo {
-  width: 33.3%;
+  position: absolute;
+  /* bottom: 100px;
+  left: 200px;
+  width: 33.3%; */
+
+  bottom: calc(50% - 300px);
+  left: calc(50% - 500px);
+  width: 300px;
+
   line-height: 1em;
   font-size: 3em;
   color: white;
-
-  position: absolute;
-  bottom: 100px;
-  left: 100px;
 }
