@@ -32,8 +32,8 @@
 
   background: 
     linear-gradient(
-      rgb(5, 5, 10) 40%,
-      #000000ff 50%,
+      rgb(0, 15, 15) 0 40%,
+      #0b0b0bff 50%,
       rgba(0, 0, 0, 0.92) 50%,
       rgba(255, 0, 0, 0.8) 66.6%
     ),
