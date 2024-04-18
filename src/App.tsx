@@ -2,53 +2,52 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Mesh } from "three";
 
-// import { useSpring, animated } from '@react-spring/three'
-import { easing } from 'maath'
+import { useSpring, a } from '@react-spring/three'
 
 import "./App.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const ProductView = ({reset}: {reset: boolean}) => {
+const ProductView = ({reset, loaded}: {reset: boolean, loaded: boolean}) => {
 
   const ref = useRef<Mesh>(null!);
   
-  // const { rotation } = useSpring({
-  //   rotation: 
-  //     reset || !ref.current
-  //     ? [.1*Math.PI, 1.25*Math.PI, 0] 
-  //     : [ref.current.rotation.x, ref.current.rotation.y, ref.current.rotation.z] 
-  // }) as any;
-
   const parcelPath = new URL("1982_sony_betacam.glb", import.meta.url);
   const model = useLoader(GLTFLoader, parcelPath.href);
 
-  // useFrame((state) => {
-  //   if (!reset) {
-  //     ref.current.rotation.x = .2*-state.pointer.y + .1*Math.PI;
-  //     ref.current.rotation.y = .2*state.pointer.x + 1.25*Math.PI;
-  //   };
-  // });
+  const { scale } = useSpring({
+    from: { scale: 0 }, to: { scale: 1 },
+    config: { mass: 2, tension: 500, friction: 50 },
+  });
 
-  useFrame((state, delta) => {
-    easing.dampE(ref.current.rotation, [.2*-state.pointer.y + .1*Math.PI, .2*state.pointer.x + 1.25*Math.PI, 0, 0], .2, delta);
+  const [{ rotation }, set] = useSpring(() => ({ rotation: [.1*Math.PI, 1.25*Math.PI, 0] }));
+
+  useFrame((state) => {
+    set({ rotation: 
+      !reset 
+      ? [.25*-state.pointer.y + .1*Math.PI, .25*state.pointer.x + 1.25*Math.PI, 0] 
+      : [.1*Math.PI, 1.25*Math.PI, 0],
+      config: { mass: 5, tension: 500, friction: 50 },
+    });
   });
 
   return (
-    <mesh
+    <a.mesh
       ref={ref}
       position={[-2.5, 1, -35]}
-      rotation={[.1*Math.PI, 1.25*Math.PI, 0]}
+      // @ts-ignore: Spring = Vector3!
+      rotation={rotation}
+      scale={scale}
     >
       <primitive object={model.scene} />
       <ambientLight intensity={.4} />
       <pointLight position={[-5, 10, -50]} intensity={5_000} color="#80ffff" />
-    </mesh>
-  )
+    </a.mesh>
+  );
 }
 
 const App = () => {
 
-  // const [resetRotation, setResetRotation] = useState(true);
+  const [resetRotation, setResetRotation] = useState(true);
 
   return (
     <div className="wrap">
@@ -65,11 +64,11 @@ const App = () => {
       </div>
       <Canvas 
         camera={{ fov: 50 }}
-        style={{ width: "1000px", height: "1000px" }}
-        // onMouseEnter={() => setResetRotation(false)}
-        // onMouseLeave={() => setResetRotation(true)}
+        style={{ width: "1000px", height: "1000px"}}
+        onMouseEnter={() => setResetRotation(false)}
+        onMouseLeave={() => setResetRotation(true)}
       >
-        <ProductView reset={false} />
+        <ProductView reset={resetRotation} loaded={true}/>
       </Canvas>
     </div>
   );
