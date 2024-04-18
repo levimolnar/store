@@ -15,7 +15,7 @@ const ProductView = ({reset, loaded}: {reset: boolean, loaded: boolean}) => {
   const model = useLoader(GLTFLoader, parcelPath.href);
 
   const { scale } = useSpring({
-    from: { scale: 0 }, to: { scale: 1 },
+    from: { scale: 0 }, to: { scale: .95 },
     config: { mass: 2, tension: 500, friction: 50 },
   });
 
@@ -64,7 +64,7 @@ const App = () => {
       </div>
       <Canvas 
         camera={{ fov: 50 }}
-        style={{ width: "1000px", height: "1000px"}}
+        style={{ width: "1000px", height: "1000px", borderRadius: "50%"}} // , background: "radial-gradient(transparent, black)"
         onMouseEnter={() => setResetRotation(false)}
         onMouseLeave={() => setResetRotation(true)}
       >
