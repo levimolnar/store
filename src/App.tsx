@@ -43,7 +43,19 @@ const ProductView = ({reset, loaded}: {reset: boolean, loaded: boolean}) => {
       <pointLight position={[-5, 10, -50]} intensity={5_000} color="#80ffff" />
     </a.mesh>
   );
-}
+};
+
+const ProductInfo = () => {
+  return (
+  <div className="productinfo">
+    <div className="boldest medium">SONY</div>
+    <div className="bold medium">BETACAM 1982</div>
+    <div className="thin small">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+    </div>
+  </div>
+  )
+};
 
 const App = () => {
 
@@ -55,13 +67,7 @@ const App = () => {
         <span className="boldest">BRAND</span>&nbsp;
         <span className="thin">SHOWCASE</span>
       </div>
-      <div className="productinfo">
-        <div className="boldest medium">SONY</div>
-        <div className="bold medium">BETACAM 1982</div>
-        <div className="thin small">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
-        </div>
-      </div>
+      <ProductInfo />
       <Canvas 
         camera={{ fov: 50 }}
         style={{ width: "1000px", height: "1000px", borderRadius: "50%"}} // , background: "radial-gradient(transparent, black)"
@@ -72,6 +78,6 @@ const App = () => {
       </Canvas>
     </div>
   );
-}
+};
 
 export default App;
