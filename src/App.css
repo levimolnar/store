@@ -1,25 +1,19 @@
 :root {
 }
 
-.boldest { font-weight: 800 }
-.bold    { font-weight: 600 }
-.thin    { font-weight: 400 }
+*{ line-height: 1em }
 
-.large  { 
-  font-size: 65px;
-  line-height: 1em;
-}
+.w1 { font-weight: 800 }
+.w2 { font-weight: 600 }
+.w3 { font-weight: 400 }
+.w4 { font-weight: 200 }
 
-.medium { 
-  font-size: 40px;
-  line-height: 1em;
-  letter-spacing: -.1em;
-}
+.size1 { font-size: 65px }
+.size2 { font-size: 40px }
+.size3 { font-size: 25px }
+.size4 { font-size: 20px }
 
-.small  { 
-  font-size: 20px;
-  line-height: 1em;
-}
+.condensed { letter-spacing: -.1em }
 
 .wrap {
   display: flex;
@@ -68,7 +62,52 @@
   left: calc(50% - 500px);
   width: 300px;
 
-  line-height: 1em;
   font-size: 3em;
   color: white;
+}
+
+.card {
+  width: min-content; height: max-content;
+  box-shadow: -10px 10px 10px #00000066;
+}
+
+.card__view {
+  width: 300px; height: 300px;
+  background: linear-gradient(#222, #444);
+}
+
+.card__content {
+  width: 300px; height: 100px;
+  background-color: #222;
+  color: white;
+
+  display: flex;
+}
+
+.card__column {
+  width: 50%; height: 100%;
+  padding-left: 20px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card__title {}
+.card__price {}
+
+.card:nth-child(1) { opacity: 1.00 }
+.card:nth-child(2) { opacity: 0.80 }
+.card:nth-child(3) { opacity: 0.60 }
+.card:nth-child(4) { opacity: 0.40 }
+.card:nth-child(5) { opacity: 0.20 }
+
+.carousel {
+  position: absolute;
+  bottom: 100px; 
+  /* right: 100px; */
+  left: 66.6%;
+  display: flex;
+  gap: 50px;
 }

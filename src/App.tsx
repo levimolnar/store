@@ -40,7 +40,7 @@ const ProductView = ({reset, loaded}: {reset: boolean, loaded: boolean}) => {
     >
       <primitive object={model.scene} />
       <ambientLight intensity={.4} />
-      <pointLight position={[-5, 10, -50]} intensity={5_000} color="#80ffff" />
+      <pointLight position={[-5, 10, -50]} intensity={5000} color="#80ffff" />
     </a.mesh>
   );
 };
@@ -48,14 +48,46 @@ const ProductView = ({reset, loaded}: {reset: boolean, loaded: boolean}) => {
 const ProductInfo = () => {
   return (
   <div className="productinfo">
-    <div className="boldest medium">SONY</div>
-    <div className="bold medium">BETACAM 1982</div>
-    <div className="thin small">
+    <div className="w1 size2 condensed">SONY</div>
+    <div>
+      <span className="w2 size2 condensed">BETACAM </span> 
+      <span className="w3 size2 condensed">1982</span>
+    </div>
+    <div className="w3 size4">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
     </div>
   </div>
-  )
+  );
 };
+
+const ProductCard = () => {
+  return (
+    <div className="card">
+      <div className="card__view">
+      </div>
+      <div className="card__content">
+        <div className="card__column">
+          <div className="w1 size3">BETACAM</div>
+          <div className="w4 size4">⚪︎⚪︎</div>
+        </div>
+        <div className="card__column w4 size3">€1299.99</div>
+      </div>
+    </div>
+  );
+};
+
+const Carousel = () => {
+  return (
+    <div className="carousel">
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+    </div>
+  );
+};
+
+
 
 const App = () => {
 
@@ -63,19 +95,20 @@ const App = () => {
 
   return (
     <div className="wrap">
-      <div className="label large">
-        <span className="boldest">BRAND</span>&nbsp;
-        <span className="thin">SHOWCASE</span>
+      <div className="label size1 condensed">
+        <span className="w1">PRODUCT</span>&nbsp;
+        <span className="w3">SHOWCASE</span>
       </div>
       <ProductInfo />
       <Canvas 
         camera={{ fov: 50 }}
-        style={{ width: "1000px", height: "1000px", borderRadius: "50%"}} // , background: "radial-gradient(transparent, black)"
+        style={{ width: "1000px", height: "1000px", borderRadius: "50%", zIndex: "2"}} // , background: "radial-gradient(transparent, black)"
         onMouseEnter={() => setResetRotation(false)}
         onMouseLeave={() => setResetRotation(true)}
       >
         <ProductView reset={resetRotation} loaded={true}/>
       </Canvas>
+      <Carousel />
     </div>
   );
 };
