@@ -5,7 +5,7 @@ import { Mesh } from "three";
 import { useSpring, a } from '@react-spring/three'
 
 import "./App.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const ProductDescription = () => {
   return (
@@ -78,22 +78,55 @@ const ProductView = () => {
   );
 };
 
+const CardMesh = () => {
+
+  // const parcelPath = new URL("1982_sony_betacam.glb", import.meta.url);
+  // const { scene } = useLoader(GLTFLoader, parcelPath.href);
+  // const copiedScene = useMemo(() => scene.clone(), [scene]);
+
+  const parcelPath = new URL("1982_sony_betacam.glb", import.meta.url);
+  const mesh = useLoader(GLTFLoader, parcelPath.href);
+  const copiedScene = useMemo(() => mesh.scene.clone(), [mesh.scene]);
+
+  // mesh.geometry.computeBoundingBox();
+
+  return (
+    <mesh 
+      // scale={3} 
+      // position={[0, 0, -2.5]}
+      scale={1} 
+      position={[-3.25, 4, -80]}
+      rotation={[.5*Math.PI, .35*Math.PI, -.5*Math.PI]}
+    >
+      <ambientLight intensity={2} />
+      <pointLight position={[0, 25, 25]} intensity={10_000} color="white" />
+      {/* <sphereGeometry /> */}
+      <primitive object={copiedScene} />
+      <meshStandardMaterial color="white" />
+    </mesh>
+  )
+}
+
 const ProductCard = () => {
+  
   return (
     <div className="card">
       <div className="card__view">
         <Canvas
-          camera={{ fov: 80 }}
+          camera={{ fov: 30 }}
+          style={{ transform: "scale(115%)"}}
         >
-          <mesh 
-            scale={3} 
-            position={[0, 0, -2.5]}
+          {/* <mesh 
+            scale={1} 
+            position={[-3.25, 4, -250]}
+            rotation={[.5*Math.PI, .333*Math.PI, -.5*Math.PI]}
           >
-            {/* <ambientLight intensity={.1} /> */}
-            <pointLight position={[10, 10, 20]} intensity={5000} color="white" />
-            <sphereGeometry />
+            <ambientLight intensity={5} />
+            <pointLight position={[0, 0, 25]} intensity={5000} color="white" />
+            <primitive object={copiedScene} />
             <meshStandardMaterial color="white" />
-          </mesh>
+          </mesh> */}
+          <CardMesh />
         </Canvas>
       </div>
       <div className="card__content">
@@ -110,8 +143,30 @@ const ProductCard = () => {
 };
 
 const Carousel = () => {
+
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = (e: WheelEvent) => {
+      const deltaY = e.deltaY;
+
+      if (sliderRef.current) {
+        sliderRef.current.scrollTop += .7*deltaY;
+        sliderRef.current.scrollLeft += .7*deltaY;
+      }
+    };
+
+    // Add event listener for mousewheel
+    document.addEventListener('wheel', handleScroll);
+
+    return () => {
+      // Clean up event listener on component unmount
+      document.removeEventListener('wheel', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="carousel">
+    <div className="carousel" ref={sliderRef}>
       <ProductCard />
       <ProductCard />
       <ProductCard />

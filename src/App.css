@@ -41,7 +41,8 @@
       rgba(0, 255, 0, 0.4), 
       transparent 33.3%
     );
-  background-blend-mode: lighten; 
+  background-blend-mode: lighten;
+
 }
 
 .page__title {
@@ -87,8 +88,11 @@
   /* margin-bottom: 150px; */
   /* overflow-x: scroll; */
 
-  height: 900px;
-  overflow: scroll;
+  /* height: 900px; */
+  height: 90vh;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
   /* align-self: flex-end; */
 
   display: flex;
@@ -97,20 +101,34 @@
   /* gap: 50px; */
 }
 
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
 .card {
   width: min-content; height: max-content;
-  padding: 25px;
+  /* padding: 25px; */
+  margin: 2.5vh;
 
   /* box-shadow: -10px 10px 10px #00000066; */
+  box-shadow: 0 0 20px 5px #ffffff55;
+  border: 1px solid #ccc;
+
 }
 
 .card__view {
-  width: 300px; height: 300px;
+  /* width: 300px; height: 300px; */
+  width: 30vh; height: 30vh;
   background: linear-gradient(#222, #444);
 }
 
 .card__content {
-  width: 300px; height: 100px;
+  width: 30vh; height: 10vh;
   background-color: #222;
   color: white;
 
@@ -154,7 +172,9 @@ span { flex: 0 0 100%; }
 .card:nth-child(5) { opacity: 0.20; margin-left: -300px; scale: .6; z-index: 1 } */
 
 
-@media only screen and (max-width: 1500px) {
+/* @media only screen and (max-width: 1500px) { */
+@media (orientation: portrait) {
+
   .wrap { 
     flex-direction: column; 
     justify-content: flex-end; 
@@ -171,6 +191,9 @@ span { flex: 0 0 100%; }
     flex-direction: row;
     margin-bottom: 100px;
     align-self: auto;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
   }
 }
 
