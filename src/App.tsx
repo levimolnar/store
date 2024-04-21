@@ -1,11 +1,15 @@
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { EffectComposer, BrightnessContrast } from '@react-three/postprocessing'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Mesh } from "three";
 
-import { useSpring, a } from '@react-spring/three'
+import { useSpring, useScroll, a } from '@react-spring/three'
+
+import { useEffect, useMemo, useRef, useState } from "react";
+
 
 import "./App.css";
-import { useEffect, useMemo, useRef, useState } from "react";
+import cardImage from "./images/betacam.png";
 
 const ProductDescription = () => {
   return (
@@ -53,8 +57,8 @@ const ProductMesh = ({reset}: {reset: boolean}) => {
       scale={scale}
     >
       <primitive object={model.scene} />
-      <ambientLight intensity={.4} />
-      <pointLight position={[-5, 10, -50]} intensity={5000} color="#80ffff" />
+      <ambientLight intensity={.5} />
+      <pointLight position={[-25, 12.5, 0]} intensity={500} color="#00ffff" />
     </a.mesh>
   );
 };
@@ -73,6 +77,12 @@ const ProductView = () => {
         <ProductMesh 
           reset={resetRotation} 
         />
+        <EffectComposer>
+          <BrightnessContrast 
+            brightness={0}
+            contrast={0}
+          />
+        </EffectComposer>
       </Canvas>
     </div>
   );
@@ -112,29 +122,28 @@ const ProductCard = () => {
   return (
     <div className="card">
       <div className="card__view">
-        <Canvas
+        {/* <Canvas
           camera={{ fov: 30 }}
-          style={{ transform: "scale(115%)"}}
+          style={{ transform: "scale(115%)" }}
         >
-          {/* <mesh 
-            scale={1} 
-            position={[-3.25, 4, -250]}
-            rotation={[.5*Math.PI, .333*Math.PI, -.5*Math.PI]}
-          >
-            <ambientLight intensity={5} />
-            <pointLight position={[0, 0, 25]} intensity={5000} color="white" />
-            <primitive object={copiedScene} />
-            <meshStandardMaterial color="white" />
-          </mesh> */}
           <CardMesh />
-        </Canvas>
+        </Canvas> */}
+        <img 
+          src={ cardImage }
+          style={{ 
+            width: "0",
+            minWidth: "100%", 
+            height: "100%", 
+            transform: "scale(115%)",
+          }}
+        />
       </div>
       <div className="card__content">
-        <div className="card__column">
+        <div className="card__column card__column--details">
           <div className="xw m condensed">BETACAM</div>
-          <div className="xt m">⚪︎⚪︎⚪︎⚪︎⚪︎</div>
+          <div className="xt m">⚪︎⚪︎⚪︎</div>
         </div>
-        <div className="card__column t s">
+        <div className="card__column card__column--price t s">
           <div>€<span className="m">1299</span>.99</div>
         </div>
       </div>
@@ -142,31 +151,35 @@ const ProductCard = () => {
   );
 };
 
-const Carousel = () => {
+const Slider = () => {
 
-  const sliderRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    
     const handleScroll = (e: WheelEvent) => {
-      const deltaY = e.deltaY;
 
-      if (sliderRef.current) {
-        sliderRef.current.scrollTop += .7*deltaY;
-        sliderRef.current.scrollLeft += .7*deltaY;
-      }
+      // could be improved by disallowing scroll to anywhere but scroll snap locations
+      // when scroll is canceled now it stops somewhere halfway and ruins the snapscroll effect
+
+      if (ref.current) {
+        const nextStopX = ref.current.scrollLeft + Math.sign(e.deltaY) * .31666 * ref.current.clientWidth;
+        const nextStopY = ref.current.scrollTop + Math.sign(e.deltaY) * .47500 * ref.current.clientHeight;
+        ref.current.scrollTo({
+          left: nextStopX,
+          top: nextStopY,
+          behavior: "smooth",
+        });
+      };
     };
 
-    // Add event listener for mousewheel
-    document.addEventListener('wheel', handleScroll);
-
-    return () => {
-      // Clean up event listener on component unmount
-      document.removeEventListener('wheel', handleScroll);
-    };
+    document.addEventListener("wheel", handleScroll);
+    return () => document.removeEventListener("wheel", handleScroll);
   }, []);
 
   return (
-    <div className="carousel" ref={sliderRef}>
+    // @ts-ignore
+    <div className="slider" ref={ref}>
       <ProductCard />
       <ProductCard />
       <ProductCard />
@@ -175,7 +188,6 @@ const Carousel = () => {
     </div>
   );
 };
-
 
 
 const App = () => {
@@ -186,7 +198,7 @@ const App = () => {
         <span className="t">SHOWCASE</span>
       </div>
       <ProductView />
-      <Carousel />
+      <Slider />
     </div>
   );
 };
