@@ -2,39 +2,40 @@
   {
     "productId": 1,
     "name": "BETACAM",
-    "price": "1299.99",
+    "price": "1299.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
+    "image_file": "betacam.png"
   },
   {
     "productId": 2,
-    "name": "BETACAM SP",
-    "price": "1299.99",
+    "name": "CAMCORDER",
+    "price": "1099.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
   },
   {
     "productId": 3,
-    "name": "---",
-    "price": "1299.99",
+    "name": "CAMERA",
+    "price": "999.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
   },
   {
     "productId": 4,
-    "name": "---",
-    "price": "1299.99",
+    "name": "TRIPOD",
+    "price": "49.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
   },
   {
     "productId": 5,
-    "name": "---",
-    "price": "1299.99",
+    "name": "STRAP",
+    "price": "12.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."

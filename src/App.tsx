@@ -2,14 +2,12 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { EffectComposer, BrightnessContrast } from '@react-three/postprocessing'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Mesh } from "three";
-
 import { useSpring, useScroll, a } from '@react-spring/three'
-
-import { useEffect, useMemo, useRef, useState } from "react";
-
+import { useEffect, useMemo, useRef, useState, useContext, createContext } from "react";
+import axios from "axios";
 
 import "./App.css";
-import cardImage from "./images/betacam.png";
+// import cardImage from "./images/betacam.png";
 
 const ProductDescription = () => {
   return (
@@ -117,17 +115,37 @@ const CardMesh = () => {
   )
 }
 
-const ProductCard = () => {
+const ProductCard = ({ data } : { data: Product }) => {
+
+  const [image, setImage] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+
+    if (data.image_file) {
+      // axios
+      // .get(`./images/${data.image_file}`)
+      // .then((res) => setImage(res.data))
+      // .catch((err) =>console.log(err))
+
+      // axios.get(`./images/${data.image_file}`, 
+      //   { responseType: "arraybuffer" })
+      //   .then((res) => {
+      //     const base64 = btoa(
+      //       new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte), "")
+      //     );
+      //     setImage(base64);
+      // });
+    };
+
+    console.log(image);
+
+  }, []);
+
+  const [ priceBig, priceSmall ] = String(data.price).split(".");
   
   return (
     <div className="card">
-      <div className="card__view">
-        {/* <Canvas
-          camera={{ fov: 30 }}
-          style={{ transform: "scale(115%)" }}
-        >
-          <CardMesh />
-        </Canvas> */}
+      {/* <div className="card__view">
         <img 
           src={ cardImage }
           style={{ 
@@ -145,6 +163,26 @@ const ProductCard = () => {
         </div>
         <div className="card__column card__column--price t s">
           <div>€<span className="m">1299</span>.99</div>
+        </div>
+      </div> */}
+      <div className="card__view">
+        <img 
+          src={"./images/betacam.png"}
+          style={{ 
+            width: "0",
+            minWidth: "100%", 
+            height: "100%", 
+            transform: "scale(115%)",
+          }}
+        />
+      </div>
+      <div className="card__content">
+        <div className="card__column card__column--details">
+          <div className="xw m condensed">{data.name}</div>
+          <div className="xt m">...</div>
+        </div>
+        <div className="card__column card__column--price t s">
+          <div>€<span className="m">{priceBig}</span>.{priceSmall}</div>
         </div>
       </div>
     </div>
@@ -177,21 +215,43 @@ const Slider = () => {
     return () => document.removeEventListener("wheel", handleScroll);
   }, []);
 
+  const products = useContext(ProductContext);
+
   return (
-    // @ts-ignore
     <div className="slider" ref={ref}>
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
+      {
+        products?.map((p: Product) => <ProductCard key={p.productId} data={p}/>)
+      }
     </div>
   );
 };
 
+interface Product {
+  productId: number;
+  name: string;
+  price: number;
+  color_options: string[];
+  categories: string[];
+  description: string;
+  image_file?: string;
+}
+
+const ProductContext = createContext<Product[] | undefined>(undefined);
 
 const App = () => {
+
+  const [productData, setProductData] = useState(undefined);
+
+  useEffect(() => {
+    axios
+    .get("mock_products.json")
+    .then((res) => setProductData(res.data))
+    .catch((err) =>console.log(err))
+
+  }, []);
+
   return (
+    <ProductContext.Provider value={productData}>
     <div className="wrap">
       <div className="page__title xl condensed">
         <span className="xw">PRODUCT</span>&nbsp;
@@ -200,6 +260,7 @@ const App = () => {
       <ProductView />
       <Slider />
     </div>
+    </ProductContext.Provider>
   );
 };
 
