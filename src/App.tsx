@@ -115,59 +115,16 @@ const CardMesh = () => {
   )
 }
 
-const ProductCard = ({ data } : { data: Product }) => {
+const ProductCard = ({ product } : { product: Product }) => {
 
-  const [image, setImage] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-
-    if (data.image_file) {
-      // axios
-      // .get(`./images/${data.image_file}`)
-      // .then((res) => setImage(res.data))
-      // .catch((err) =>console.log(err))
-
-      // axios.get(`./images/${data.image_file}`, 
-      //   { responseType: "arraybuffer" })
-      //   .then((res) => {
-      //     const base64 = btoa(
-      //       new Uint8Array(res.data).reduce((data, byte) => data + String.fromCharCode(byte), "")
-      //     );
-      //     setImage(base64);
-      // });
-    };
-
-    console.log(image);
-
-  }, []);
-
-  const [ priceBig, priceSmall ] = String(data.price).split(".");
+  const [ priceBig, priceSmall ] = String(product.price).split(".");
   
   return (
     <div className="card">
-      {/* <div className="card__view">
-        <img 
-          src={ cardImage }
-          style={{ 
-            width: "0",
-            minWidth: "100%", 
-            height: "100%", 
-            transform: "scale(115%)",
-          }}
-        />
-      </div>
-      <div className="card__content">
-        <div className="card__column card__column--details">
-          <div className="xw m condensed">BETACAM</div>
-          <div className="xt m">⚪︎⚪︎⚪︎</div>
-        </div>
-        <div className="card__column card__column--price t s">
-          <div>€<span className="m">1299</span>.99</div>
-        </div>
-      </div> */}
       <div className="card__view">
         <img 
-          src={"./images/betacam.png"}
+          src={product.image_file ? require(`./images/${product.image_file}`) : ""}
+          alt={product.name}
           style={{ 
             width: "0",
             minWidth: "100%", 
@@ -178,8 +135,8 @@ const ProductCard = ({ data } : { data: Product }) => {
       </div>
       <div className="card__content">
         <div className="card__column card__column--details">
-          <div className="xw m condensed">{data.name}</div>
-          <div className="xt m">...</div>
+          <div className="xw m condensed">{product.name}</div>
+          <div className="xt xs">{product.code}</div>
         </div>
         <div className="card__column card__column--price t s">
           <div>€<span className="m">{priceBig}</span>.{priceSmall}</div>
@@ -220,15 +177,16 @@ const Slider = () => {
   return (
     <div className="slider" ref={ref}>
       {
-        products?.map((p: Product) => <ProductCard key={p.productId} data={p}/>)
+        products?.map((p: Product) => <ProductCard key={p.id} product={p}/>)
       }
     </div>
   );
 };
 
 interface Product {
-  productId: number;
+  id: number;
   name: string;
+  code: string;
   price: number;
   color_options: string[];
   categories: string[];
