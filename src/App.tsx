@@ -4,9 +4,9 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Mesh } from "three";
 import { useSpring, useScroll, a } from '@react-spring/three'
 import { useEffect, useMemo, useRef, useState, useContext, createContext } from "react";
-import axios from "axios";
 
 import "./App.css";
+import { Product, ProductContext } from "./context/product";
 // import cardImage from "./images/betacam.png";
 
 const ProductDescription = () => {
@@ -117,13 +117,17 @@ const CardMesh = () => {
 
 const ProductCard = ({ product } : { product: Product }) => {
 
+  const { selected: [, setProductSelected] } = useContext(ProductContext);
+
   const [ priceBig, priceSmall ] = String(product.price).split(".");
   
   return (
-    <div className="card">
+    <div className="card"
+      onClick={() => { setProductSelected(product.id) }}
+    >
       <div className="card__view">
         <img 
-          src={product.image_file ? require(`./images/${product.image_file}`) : ""}
+          src={product.image_file ? require(`./images/${product.image_file}`) : require("./images/placeholder.png")}
           alt={product.name}
           style={{ 
             width: "0",
@@ -155,7 +159,7 @@ const Slider = () => {
     const handleScroll = (e: WheelEvent) => {
 
       // could be improved by disallowing scroll to anywhere but scroll snap locations
-      // when scroll is canceled now it stops somewhere halfway and ruins the snapscroll effect
+      // when scroll is canceled it stops somewhere halfway and ruins the snapscroll effect
 
       if (ref.current) {
         const nextStopX = ref.current.scrollLeft + Math.sign(e.deltaY) * .31666 * ref.current.clientWidth;
@@ -172,45 +176,53 @@ const Slider = () => {
     return () => document.removeEventListener("wheel", handleScroll);
   }, []);
 
-  const products = useContext(ProductContext);
+  const { products } = useContext(ProductContext);
 
   return (
     <div className="slider" ref={ref}>
-      {
-        products?.map((p: Product) => <ProductCard key={p.id} product={p}/>)
-      }
+      { products?.map((p: Product) => <ProductCard key={p.id} product={p}/>) }
     </div>
   );
 };
 
-interface Product {
-  id: number;
-  name: string;
-  code: string;
-  price: number;
-  color_options: string[];
-  categories: string[];
-  description: string;
-  image_file?: string;
-}
+// interface Product {
+//   id: number;
+//   name: string;
+//   code: string;
+//   price: number;
+//   color_options: string[];
+//   categories: string[];
+//   description: string;
+//   image_file?: string;
+// };
 
-const ProductContext = createContext<Product[] | undefined>(undefined);
+// interface ContextValues {
+//   products: Product[];
+//   selected: [number | undefined, React.Dispatch<React.SetStateAction<number | undefined>>];
+// };
+
+// const ProductContext = createContext<ContextValues>({
+//   products: [], 
+//   selected: [undefined, () => {}]}
+// );
 
 const App = () => {
 
-  const [productData, setProductData] = useState(undefined);
-
-  useEffect(() => {
-    axios
-    .get("mock_products.json")
-    .then((res) => setProductData(res.data))
-    .catch((err) =>console.log(err))
-
-  }, []);
+  const { selected: [selectedProduct] } = useContext(ProductContext);
 
   return (
-    <ProductContext.Provider value={productData}>
     <div className="wrap">
+
+      { 
+        !selectedProduct ||
+        (
+          <div className="modal__backdrop">
+            <div className="modal__box">
+            </div>
+          </div>
+        )
+      }
+
       <div className="page__title xl condensed">
         <span className="xw">PRODUCT</span>&nbsp;
         <span className="t">SHOWCASE</span>
@@ -218,7 +230,6 @@ const App = () => {
       <ProductView />
       <Slider />
     </div>
-    </ProductContext.Provider>
   );
 };
 
