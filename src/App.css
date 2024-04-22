@@ -12,7 +12,7 @@
 .xw { font-weight: 800 }
 .w  { font-weight: 600 }
 .t  { font-weight: 400 }
-.xt { font-weight: 200 }
+.xt { font-weight: 300 }
 
 .condensed { letter-spacing: -.1em }
 
@@ -52,7 +52,17 @@
     ); */
 
   /* filter: hue-rotate(180deg); */
+
+  filter: none;
+  transition: 
+    filter 150ms ease-in,
+    transform 150ms ease-in;
 }
+
+.wrap--blurred { 
+  filter: saturate(.25) brightness(.75) blur(30px);
+  transform: scale(1.05);
+ }
 
 .page__title {
   position: absolute;
@@ -74,7 +84,7 @@
 .product__canvas {
   border-radius: 50%;
 
-  z-index: 10;
+  z-index: 2;
 
   /* background: radial-gradient(transparent 50%, black 70%); */
 }
@@ -85,7 +95,7 @@
   position: absolute;
   bottom: 200px;
   /* left: 10px; */
-  z-index: 3;
+  z-index: 1;
 
   color: white;
 }
@@ -97,7 +107,6 @@
 
   overflow-y: scroll;
   overflow-x: hidden;
-  /* scroll-snap-type: y mandatory; */
 
   display: flex;
   flex-direction: column;
@@ -117,14 +126,14 @@
 .card {
   min-width: 31.875vh; min-height: 42.5vh;
   box-sizing: border-box;
+  z-index: 3;
 
   /* box-shadow: -10px 10px 10px #00000066; */
   box-shadow: 0 0 20px 5px #00ffff55;
   border: 1px solid #ccc;
   border-radius: 5px;
 
-  /* scroll-snap-align: start;
-  scroll-margin: 2.5vh 0 0 2.5vh; */
+  cursor: pointer;
 }
 
 .card__view {
@@ -147,57 +156,105 @@
 }
 
 .card__column {
-  width: 50%; height: 100%;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .card__column--details {
+  width: 40%; height: 100%;
+
   padding-left: 7.5%;
   align-items: flex-start;
   /* gap: 5px; */
 }
 
 .card__column--price {
+  width: 60%; height: 100%;
+  overflow: hidden;
+  
   padding-right: 7.5%;
   align-items: flex-end;
-} 
-
-.card:nth-child(1) { 
-  /* opacity: 1.00; */
-  /* box-shadow: 0 0 20px 5px #ffffff66;
-  border: 1px solid white; */
-  z-index: 5;
 }
-
-/* .card:nth-child(2) { opacity: 0.80 }
-.card:nth-child(3) { opacity: 0.60 }
-.card:nth-child(4) { opacity: 0.40 }
-.card:nth-child(5) { opacity: 0.20 } */
-
-
 
 .modal__backdrop {
   position: absolute;
   width: 100vw; height: 100vh;
-  z-index: 20;
+  z-index: 10;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  /* background-color: #00000088; */
-  backdrop-filter: brightness(50%) blur(20px);
-  transition: all 100ms;
+  /* backdrop-filter: none;
+  transition: backdrop-filter 500ms ease; */
 }
 
+/* .modal__backdrop--filtered {
+  backdrop-filter: saturate(.2) brightness(.2) blur(20px);
+  transition: backdrop-filter 100ms;
+} */
+
 .modal__box {
-  width: 500px; height: 600px;
-  border-radius: 10px;
-  background-color: #fff;
+  width: 600px; height: 750px;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: #222;
+  border: 1px solid #444;
 }
+
+.modal__bar {
+  width: 100%; height: 60px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  /* background-color: #ff000033; */
+  border-bottom: 1px solid #444;
+}
+
+.button {
+  width: 30px; height: 30px;
+  text-align: center;
+  line-height: 28px;
+  border-radius: 50%;
+
+  box-shadow: 0 0 10px 0 #ffffff22;
+  background-color: #1b1b1b;
+
+  cursor: pointer;
+}
+
+.button--exit { 
+  margin: 0 15px 0 0; 
+  color: #555 
+}
+
+.button--exit::before { content: "🗙" }
+
+.button--buy {
+  scale: 1.2;
+  margin: 0 0 0 15px; 
+  color: #ddd;
+}
+
+.button--cart {
+  position: absolute;
+  top: 6vh; right: 6vh;
+
+  scale: 2;
+  margin: 0 0 0 15px; 
+  background-color: #ccc;
+  color: #000;
+}
+
+.credit {
+  position: absolute;
+  left: 10px; bottom: 10px;
+  color: white;
+}
+
+a { text-decoration: none; color: white }
 
 /* @media only screen and (max-width: 1500px) { */
 @media (orientation: portrait) {
@@ -214,7 +271,7 @@
 
   .product { 
     position: absolute;  
-    z-index: 10;
+    z-index: 1;
     top: 50%; 
     transform: translate(0, -50%);
   }
@@ -241,6 +298,10 @@
 
   .card {
     min-width: 26.666vw; min-height: 35.555vw;
+  }
+
+  .button--cart {
+    top: 6vw; right: 6vw;
   }
 }
 

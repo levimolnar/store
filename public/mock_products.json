@@ -11,8 +11,8 @@
   },
   {
     "id": 2,
-    "name": "CAMCORDER",
-    "code": "",
+    "name": "CAMERA",
+    "code": "XXXXX",
     "price": "1099.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
@@ -21,7 +21,7 @@
   {
     "id": 3,
     "name": "CAMERA",
-    "code": "",
+    "code": "XXXXX",
     "price": "999.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
@@ -30,7 +30,7 @@
   {
     "id": 4,
     "name": "TRIPOD",
-    "code": "",
+    "code": "XXXXX",
     "price": "49.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
@@ -39,7 +39,7 @@
   {
     "id": 5,
     "name": "STRAP",
-    "code": "",
+    "code": "XXXXX",
     "price": "12.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],

@@ -2,7 +2,10 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { EffectComposer, BrightnessContrast } from '@react-three/postprocessing'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Mesh } from "three";
-import { useSpring, useScroll, a } from '@react-spring/three'
+
+import { useSpring, a, useTransition } from '@react-spring/three'
+import { animated } from 'react-spring'
+
 import { useEffect, useMemo, useRef, useState, useContext, createContext } from "react";
 
 import "./App.css";
@@ -123,7 +126,7 @@ const ProductCard = ({ product } : { product: Product }) => {
   
   return (
     <div className="card"
-      onClick={() => { setProductSelected(product.id) }}
+      // onClick={() => { setProductSelected(product.id) }}
     >
       <div className="card__view">
         <img 
@@ -139,11 +142,14 @@ const ProductCard = ({ product } : { product: Product }) => {
       </div>
       <div className="card__content">
         <div className="card__column card__column--details">
-          <div className="xw m condensed">{product.name}</div>
+          <div className="w s condensed">{product.name}</div>
           <div className="xt xs">{product.code}</div>
         </div>
         <div className="card__column card__column--price t s">
-          <div>€<span className="m">{priceBig}</span>.{priceSmall}</div>
+          <div>
+            €<span className="t m">{priceBig}</span>.{priceSmall}
+            <div className="button button--buy material-symbols-outlined xs">add_shopping_cart</div>
+          </div>
         </div>
       </div>
     </div>
@@ -185,51 +191,68 @@ const Slider = () => {
   );
 };
 
-// interface Product {
-//   id: number;
-//   name: string;
-//   code: string;
-//   price: number;
-//   color_options: string[];
-//   categories: string[];
-//   description: string;
-//   image_file?: string;
-// };
+const Modal = () => {
 
-// interface ContextValues {
-//   products: Product[];
-//   selected: [number | undefined, React.Dispatch<React.SetStateAction<number | undefined>>];
-// };
+  const { selected: [productSelected, setProductSelected] } = useContext(ProductContext);
 
-// const ProductContext = createContext<ContextValues>({
-//   products: [], 
-//   selected: [undefined, () => {}]}
-// );
+  useEffect(() => {
+
+    const close = (e: KeyboardEvent) => {
+      if(e.keyCode === 27){
+        setProductSelected(undefined);
+      };
+    };
+
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  },[]);
+
+  const transition = useTransition(productSelected, {
+    from:  { opacity: 0, scale: 0.9 },
+    enter: { opacity: 1, scale: 1.0 },
+    leave: { opacity: 0, scale: 0.9 },
+    config: {duration: 150}
+  });
+
+  return transition((style, item) => (
+    <animated.div className="modal__backdrop" style={style}>
+      <div className="modal__box">
+        <div className="modal__bar">  
+          <div className="button button--exit" 
+            onClick={() => {setProductSelected(undefined)}}
+          />
+        </div>
+      </div>
+    </animated.div>
+  ));
+};
 
 const App = () => {
 
-  const { selected: [selectedProduct] } = useContext(ProductContext);
+  const { selected: [selectedProduct, setProductSelected] } = useContext(ProductContext);
 
   return (
-    <div className="wrap">
+    <>
+      <Modal />
+      <div className={`wrap ${selectedProduct ? "wrap--blurred" : ""}`}>
+        <div className="page__title xl condensed">
+          <span className="xw">PRODUCT</span>&nbsp;
+          <span className="t">SHOWCASE</span>
+        </div>
+        <div 
+          className="button button--cart material-symbols-outlined xw s"
+          onClick={() => {setProductSelected(1)}}
+        >
+          shopping_cart
+        </div>
 
-      { 
-        !selectedProduct ||
-        (
-          <div className="modal__backdrop">
-            <div className="modal__box">
-            </div>
-          </div>
-        )
-      }
-
-      <div className="page__title xl condensed">
-        <span className="xw">PRODUCT</span>&nbsp;
-        <span className="t">SHOWCASE</span>
+        <ProductView />
+        <Slider />
+        <footer className="credit xt xs">
+          3D model by <a href="https://sketchfab.com/maxdragon" target="_blank" className="w">@MAXDRAGON</a>
+        </footer>
       </div>
-      <ProductView />
-      <Slider />
-    </div>
+    </>
   );
 };
 
