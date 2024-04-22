@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import "./App.css";
-import { Product, ProductContext } from "./context/product";
 import { Modal } from "./components/Modal";
 import { Slider } from "./components/Slider";
 import { ProductView } from "./components/Product";
@@ -30,7 +29,7 @@ const App = () => {
         <ProductView />
         <Slider />
         <footer className="credit xt s">
-          3D model by <a href="https://sketchfab.com/maxdragon" target="_blank" className="w">@MAXDRAGON</a>
+          3D model by <a href="https://sketchfab.com/maxdragon" target="_blank" rel="noreferrer" className="w">@MAXDRAGON</a>
         </footer>
       </div>
     </>

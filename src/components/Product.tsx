@@ -1,6 +1,6 @@
-import { useSpring, a, useTransition } from '@react-spring/three'
+import { useSpring, a } from '@react-spring/three'
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { BrightnessContrast, EffectComposer } from '@react-three/postprocessing';
+// import { BrightnessContrast, EffectComposer } from '@react-three/postprocessing';
 import { useRef, useState } from "react";
 import { Mesh } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";

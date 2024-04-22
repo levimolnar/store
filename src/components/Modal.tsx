@@ -15,6 +15,7 @@ export const Modal = ({ open, setOpen }: { open: boolean, setOpen: React.Dispatc
 
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
+    // @ts-ignore: missing dependency
   },[]);
 
   const transition = useTransition(
