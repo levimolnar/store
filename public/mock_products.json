@@ -11,7 +11,7 @@
   },
   {
     "id": 1,
-    "name": "CAMERA",
+    "name": "CAMERA 1",
     "code": "",
     "price": "1099.95",
     "color_options": ["BLACK", "WHITE"],
@@ -20,7 +20,7 @@
   },
   {
     "id": 2,
-    "name": "CAMERA",
+    "name": "CAMERA 2",
     "code": "",
     "price": "999.95",
     "color_options": ["BLACK", "WHITE"],
@@ -29,7 +29,7 @@
   },
   {
     "id": 3,
-    "name": "TRIPOD",
+    "name": "GIMBAL",
     "code": "",
     "price": "49.95",
     "color_options": ["BLACK", "WHITE"],
@@ -38,9 +38,9 @@
   },
   {
     "id": 4,
-    "name": "STRAP",
+    "name": "LED-PANEL",
     "code": "",
-    "price": "12.95",
+    "price": "49.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
