@@ -79,9 +79,19 @@
 }
 
 .button--cart {
+  position: relative;
   scale: 1.8;
   margin: 23px 23px; 
   background-color: #ccc !important;
+}
+
+.button--indicator {
+  font-family:'Segoe UI';
+  position: absolute;
+  bottom: -40%; right: -40%;
+  scale: 0.25;
+  background-color: #f32020 !important;
+  color: #fff !important; 
 }
 
 

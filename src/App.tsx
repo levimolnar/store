@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import "./App.css";
 import { Modal } from "./components/Modal";
 import { Slider } from "./components/Slider";
 import { ProductView } from "./components/Product";
+import { ProductContext } from "./context/product";
 
 const App = () => {
 
-  // const { selected: [selectedProduct, setProductSelected] } = useContext(ProductContext);
+  const { cart: { data: cartData } } = useContext(ProductContext);
   const [ cartOpen, setCartOpen ] = useState<boolean>(false);
 
   return (
@@ -24,6 +25,11 @@ const App = () => {
             onClick={() => {setCartOpen(true)}}
           >
             shopping_cart
+            {Object.keys(cartData).length ? (
+              <div className="button button--indicator xw s">
+                {Object.keys(cartData).length}
+              </div>
+            ) : null}
           </div>
         </div>
         <ProductView />
