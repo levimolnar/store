@@ -120,14 +120,13 @@ const CardMesh = () => {
 
 const ProductCard = ({ product } : { product: Product }) => {
 
-  const { selected: [, setProductSelected] } = useContext(ProductContext);
+  const { cart: { data: cartData, add } } = useContext(ProductContext);
+  console.log(cartData);
 
   const [ priceBig, priceSmall ] = String(product.price).split(".");
   
   return (
-    <div className="card"
-      // onClick={() => { setProductSelected(product.id) }}
-    >
+    <div className="card">
       <div className="card__view">
         <img 
           src={product.image_file ? require(`./images/${product.image_file}`) : require("./images/placeholder.png")}
@@ -148,7 +147,12 @@ const ProductCard = ({ product } : { product: Product }) => {
         <div className="card__column card__column--price t s">
           <div>
             €<span className="t m">{priceBig}</span>.{priceSmall}
-            <div className="button button--buy material-symbols-outlined xs">add_shopping_cart</div>
+            <div 
+              className="button button--add material-symbols-outlined xs"
+              onClick={() => {add(product.id)}}
+            >
+              add_shopping_cart
+            </div>
           </div>
         </div>
       </div>
@@ -191,36 +195,51 @@ const Slider = () => {
   );
 };
 
-const Modal = () => {
+const Modal = ({ open, setOpen }: { open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
 
-  const { selected: [productSelected, setProductSelected] } = useContext(ProductContext);
+  const { products, cart: { data: cartData, remove } } = useContext(ProductContext);
 
   useEffect(() => {
 
     const close = (e: KeyboardEvent) => {
-      if(e.keyCode === 27){
-        setProductSelected(undefined);
-      };
+      if (e.keyCode === 27) {setOpen(false)};
     };
 
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
   },[]);
 
-  const transition = useTransition(productSelected, {
-    from:  { opacity: 0, scale: 0.9 },
-    enter: { opacity: 1, scale: 1.0 },
-    leave: { opacity: 0, scale: 0.9 },
-    config: {duration: 150}
-  });
+  const transition = useTransition(
+    (open || undefined), {
+      from:  { opacity: 0, scale: 0.9 },
+      enter: { opacity: 1, scale: 1.0 },
+      leave: { opacity: 0, scale: 0.9 },
+      config: {duration: 150}
+    }
+  );
 
   return transition((style, item) => (
     <animated.div className="modal__backdrop" style={style}>
       <div className="modal__box">
         <div className="modal__bar">  
-          <div className="button button--exit" 
-            onClick={() => {setProductSelected(undefined)}}
+          <div className="modal__title m t">SHOPPING CART</div>
+          <div 
+            className="button button--exit" 
+            onClick={() => {setOpen(false)}}
           />
+        </div>
+        <div className="cart">
+          {
+            Object.entries(cartData).map(([k, v]) => (
+              <div className="cart__item s" key={k}>
+                <span>{v.amount}x {products[+k].name}</span>
+                <div 
+                  className="button button--remove"
+                  onClick={() => remove(+k)}
+                />
+              </div>
+            ))
+          }
         </div>
       </div>
     </animated.div>
@@ -229,23 +248,23 @@ const Modal = () => {
 
 const App = () => {
 
-  const { selected: [selectedProduct, setProductSelected] } = useContext(ProductContext);
+  // const { selected: [selectedProduct, setProductSelected] } = useContext(ProductContext);
+  const [ cartOpen, setCartOpen ] = useState<boolean>(false);
 
   return (
     <>
-      <Modal />
-      <div className={`wrap ${selectedProduct ? "wrap--blurred" : ""}`}>
+      <Modal open={cartOpen} setOpen={setCartOpen}/>
+      <div className={`wrap ${cartOpen ? "wrap--blurred" : ""}`}>
         <div className="page__title xl condensed">
           <span className="xw">PRODUCT</span>&nbsp;
           <span className="t">SHOWCASE</span>
         </div>
         <div 
           className="button button--cart material-symbols-outlined xw s"
-          onClick={() => {setProductSelected(1)}}
+          onClick={() => {setCartOpen(true)}}
         >
           shopping_cart
         </div>
-
         <ProductView />
         <Slider />
         <footer className="credit xt xs">

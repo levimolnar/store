@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "name": "BETACAM",
     "code": "BVW-1",
     "price": "1299.95",
@@ -10,36 +10,36 @@
     "image_file": "betacam.png"
   },
   {
-    "id": 2,
+    "id": 1,
     "name": "CAMERA",
-    "code": "XXXXX",
+    "code": "",
     "price": "1099.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
   },
   {
-    "id": 3,
+    "id": 2,
     "name": "CAMERA",
-    "code": "XXXXX",
+    "code": "",
     "price": "999.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
   },
   {
-    "id": 4,
+    "id": 3,
     "name": "TRIPOD",
-    "code": "XXXXX",
+    "code": "",
     "price": "49.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
   },
   {
-    "id": 5,
+    "id": 4,
     "name": "STRAP",
-    "code": "XXXXX",
+    "code": "",
     "price": "12.95",
     "color_options": ["BLACK", "WHITE"],
     "categories": ["ELECTRONICS", "VIDEO CAMERA"],

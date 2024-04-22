@@ -132,8 +132,6 @@
   box-shadow: 0 0 20px 5px #00ffff55;
   border: 1px solid #ccc;
   border-radius: 5px;
-
-  cursor: pointer;
 }
 
 .card__view {
@@ -206,10 +204,29 @@
 .modal__bar {
   width: 100%; height: 60px;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
 
   /* background-color: #ff000033; */
+  border-bottom: 1px solid #444;
+}
+
+.modal__title {
+  margin-left: 15px;
+  color: #bbb;
+}
+
+.cart {
+  margin: 15px;
+  color: white;
+}
+
+.cart__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 10px 10px 15px;
   border-bottom: 1px solid #444;
 }
 
@@ -221,28 +238,38 @@
 
   box-shadow: 0 0 10px 0 #ffffff22;
   background-color: #1b1b1b;
+  color: #555;
 
   cursor: pointer;
+  z-index: 20;
 }
 
 .button--exit { 
   margin: 0 15px 0 0; 
-  color: #555 
 }
 
 .button--exit::before { content: "🗙" }
 
-.button--buy {
+.button--add {
   scale: 1.2;
   margin: 0 0 0 15px; 
-  color: #ddd;
+  background-color: #444;
+  color: #fff;
 }
+
+.button--remove {
+  scale: 1;
+  margin: 0 0 0 15px; 
+}
+
+.button--remove::before { content: "−" }
+
 
 .button--cart {
   position: absolute;
-  top: 6vh; right: 6vh;
+  top: 7vh; right: 7vh;
 
-  scale: 2;
+  scale: 2.5;
   margin: 0 0 0 15px; 
   background-color: #ccc;
   color: #000;
@@ -301,7 +328,7 @@ a { text-decoration: none; color: white }
   }
 
   .button--cart {
-    top: 6vw; right: 6vw;
+    top: 7vw; right: 7vw;
   }
 }
 
