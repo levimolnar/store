@@ -121,7 +121,6 @@ const CardMesh = () => {
 const ProductCard = ({ product } : { product: Product }) => {
 
   const { cart: { data: cartData, add } } = useContext(ProductContext);
-  console.log(cartData);
 
   const [ priceBig, priceSmall ] = String(product.price).split(".");
   
