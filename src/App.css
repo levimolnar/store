@@ -124,8 +124,8 @@
 }
 
 .slider {
-  height: 100vh;
-  padding: 5vh;
+  height: 95vh;
+  padding: 2.5vh;
   box-sizing: border-box;
 
   overflow-y: scroll;
@@ -349,9 +349,8 @@ a { text-decoration: none; color: white }
   }
 
   .slider { 
-    width: 100vw; height: fit-content;
-    padding: 5vw 5vw 15vw 5vw;
-    /* padding: 5vw 2.5vw 10vw 2.5vw; */
+    width: 95vw; height: fit-content;
+    padding: 2.5vw 2.5vw 15vw 2.5vw;
     
     gap: 5vw;
 
@@ -368,5 +367,3 @@ a { text-decoration: none; color: white }
     min-width: 26.666vw; min-height: 35.555vw;
   }
 }
-
-  /* .slider { justify-self: flex-end; align-self: auto } */

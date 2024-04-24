@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Product, ProductContext } from "../context/product";
 
 export const ProductCard = ({ product } : { product: Product }) => {
@@ -46,27 +46,38 @@ export const Slider = () => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    
-    const handleScroll = (e: WheelEvent) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-      // could be improved by disallowing scroll to anywhere but scroll snap locations
-      // when scroll is canceled it stops somewhere halfway and ruins the snapscroll effect
+  const handleScroll = (e: WheelEvent) => {
 
-      if (ref.current) {
-        const nextStopX = ref.current.scrollLeft + Math.sign(e.deltaY) * .31666 * ref.current.clientWidth;
-        const nextStopY = ref.current.scrollTop + Math.sign(e.deltaY) * .47500 * ref.current.clientHeight;
-        ref.current.scrollTo({
-          left: nextStopX,
-          top: nextStopY,
-          behavior: "smooth",
-        });
-      };
+    if (ref.current) {
+      const isPortrait = window.innerWidth <= window.innerHeight;
+
+      const sliderLength = isPortrait ? ref.current.scrollWidth : ref.current.scrollHeight;
+      const pageLength   = isPortrait ? ref.current.clientWidth : ref.current.clientHeight;
+      const maxScroll    = sliderLength - pageLength;
+
+      const cardLength   = sliderLength / ref.current.childNodes.length;
+
+      const nextSlide = currentSlide + Math.sign(e.deltaY);
+      const scrollDistance = Math.round(nextSlide * cardLength);
+
+      if (scrollDistance < 0 || scrollDistance > maxScroll) { return };
+
+      ref.current.scrollTo({
+        top: isPortrait ? 0 : scrollDistance,
+        left: isPortrait ? scrollDistance : 0,
+        behavior: "smooth",
+      });
+
+      setCurrentSlide(nextSlide);
     };
+  };
 
+  useEffect(() => {
     document.addEventListener("wheel", handleScroll);
     return () => document.removeEventListener("wheel", handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   const { products } = useContext(ProductContext);
 
