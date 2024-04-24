@@ -5,11 +5,18 @@ import { Modal } from "./components/Modal";
 import { Slider } from "./components/Slider";
 import { ProductView } from "./components/Product";
 import { ProductContext } from "./context/product";
+import { useSpring, animated } from "react-spring";
 
 const App = () => {
 
   const { cart: { data: cartData } } = useContext(ProductContext);
   const [ cartOpen, setCartOpen ] = useState<boolean>(false);
+
+  const fadeInStyle = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 50 },
+  })
 
   return (
     <>
@@ -20,8 +27,9 @@ const App = () => {
             <span className="xw">PRODUCT</span>&nbsp;
             <span className="t">SHOWCASE</span>
           </div>
-          <div 
+          <animated.div 
             className="button button--cart material-symbols-outlined xw s"
+            style={fadeInStyle}
             onClick={() => {setCartOpen(true)}}
           >
             shopping_cart
@@ -30,7 +38,7 @@ const App = () => {
                 {Object.keys(cartData).length}
               </div>
             ) : null}
-          </div>
+          </animated.div>
         </div>
         <ProductView />
         <Slider />

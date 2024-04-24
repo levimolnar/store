@@ -1,11 +1,18 @@
 import { useContext, useEffect, useRef, useState, useCallback } from "react";
 import { Product, ProductContext } from "../context/product";
+import { useSpring, animated } from "react-spring";
 
 export const ProductCard = ({ product } : { product: Product }) => {
 
   const { cart: { add } } = useContext(ProductContext);
 
   const [ priceBig, priceSmall ] = String(product.price).split(".");
+
+  const fadeInStyle = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 50 },
+  })
   
   return (
     <div className="card">
@@ -22,12 +29,13 @@ export const ProductCard = ({ product } : { product: Product }) => {
         />
       </div>
       <div className="card__content">
-        <div 
+        <animated.div 
           className="button button--add material-symbols-outlined s"
+          style={fadeInStyle}
           onClick={() => {add(product.id)}}
         >
           add_shopping_cart
-        </div>
+        </animated.div>
         <div className="card__column card__column--details m">
           <div className="w condensed">{product.name}</div>
           <div className="xt ">{product.code}</div>
