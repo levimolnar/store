@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState, useCallback } from "react";
 import { Product, ProductContext } from "../context/product";
 
 export const ProductCard = ({ product } : { product: Product }) => {
@@ -48,7 +48,7 @@ export const Slider = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const handleScroll = (e: WheelEvent) => {
+  const handleScroll = useCallback((e: WheelEvent) => {
 
     if (ref.current) {
       const isPortrait = window.innerWidth <= window.innerHeight;
@@ -72,7 +72,7 @@ export const Slider = () => {
 
       setCurrentSlide(nextSlide);
     };
-  };
+  }, [currentSlide]);
 
   useEffect(() => {
     document.addEventListener("wheel", handleScroll);
